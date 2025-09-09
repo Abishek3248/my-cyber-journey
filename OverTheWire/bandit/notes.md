@@ -224,3 +224,136 @@
 
 **Takeaway:**  
 - Use `base64 -d` to decode Base64-encoded files and extract readable content quickly.
+
+
+
+## Level 11  
+
+**Concepts Learned:**  
+- Introduction to ROT13 (a substitution cipher where letters are rotated by 13 places in the alphabet)  
+- Using the `tr` command to perform character substitution and decoding  
+
+**Tools / Commands Used:**  
+- `tr 'A-Za-z' 'N-ZA-Mn-za-m' < data.txt` – decode the ROT13-encoded content in `data.txt`  
+
+**My Experience / Challenges:**  
+- The file contained text encoded with ROT13, but I didn’t know how to approach it initially.  
+- I tried using `man` and `apropos` with “rotate,” but couldn’t find a direct solution.  
+- The definition of `tr` hinted it could transform characters, but I wasn’t sure how.  
+- After researching online, I learned about ROT13 and how to apply it with `tr`.  
+- This gave me a better understanding of both simple ciphers and how flexible `tr` can be.  
+
+**Takeaway:**  
+- When encountering encoded data, research the encoding type.  
+- ROT13 can be decoded in Linux using the `tr` command for character substitution.
+
+
+
+## Level 12  
+
+**Concepts Learned:**  
+- Using `/tmp` for safe experimentation (`mkdir`, `cp`, `mv`)  
+- Hexdump and reversing it with `xxd`  
+- Redirecting command output with `>`  
+- Detecting file types with `file`  
+- Handling multiple compression formats: gzip, bzip2, tar  
+- Importance of file extensions for proper decompression  
+
+**Tools / Commands Used:**  
+- `mkdir /tmp/mydir && cp data.txt /tmp/mydir/` – prepare workspace  
+- `xxd -r data.txt > data1.bin` – reverse hexdump into a binary file  
+- `file data1.bin` – check file type after each step  
+- `mv data1.bin data1.gz && gzip -d data1.gz` – decompress gzip file  
+- `mv data2.bin data2.bz2 && bzip2 -d data2.bz2` – decompress bzip2 file  
+- `tar -xf data3.tar` – extract tar archives  
+- Repeated the cycle (`file → rename with correct extension → decompress`) until final file revealed the password  
+
+**My Experience / Challenges:**  
+- At first, I was confused after reversing the hexdump since the content didn’t look different.  
+- Learned to redirect decoded output into a new file with `>`.  
+- `file` showed it was gzip-compressed, so I renamed with `.gz` and decompressed.  
+- I thought it failed since the file looked similar, but after checking with `file` again, I realized it was actually **bzip2** compressed.  
+- That’s when I understood this challenge required **repeated decompression** using different tools.  
+- Step by step, I used `gzip`, `bzip2`, and `tar` depending on the detected format.  
+- Finally, after multiple iterations, I found the password inside `data8.bin`.  
+
+**Takeaway:**  
+- Always use `file` after each step to confirm file type.  
+- File extensions matter for decompression tools — rename files accordingly.  
+- Some challenges require patience and repeated transformations, reinforcing persistence and attention to detail.
+
+
+
+## Level 13  
+
+**Concepts Learned:**  
+- SSH private keys can be used as an alternative to passwords.  
+- The `-i` flag in `ssh` specifies an identity (private key) file for authentication.  
+- Access control: even if a file exists, you can only read it with the correct permissions or user account.  
+
+**Tools / Commands Used:**  
+- `ls` – found `sshkey.private` in the home directory.  
+- `ssh -i sshkey.private bandit14@localhost` – logged in as `bandit14` using the private key.  
+- `cat /etc/bandit_pass/bandit14` – retrieved the password once logged in.  
+
+**My Experience / Challenges:**  
+- Initially couldn’t read `/etc/bandit_pass/bandit14` because it’s restricted to `bandit14`.  
+- Didn’t know what the private key was at first, so I researched and learned about SSH key-based authentication.  
+- Tried using `ssh` with the `-i` flag and successfully logged in as `bandit14`.  
+- After logging in, reading the password file became straightforward.  
+
+**Takeaway:**  
+- When direct access is restricted, look for alternative authentication methods (like SSH keys).  
+- Always check the home directory for useful files.  
+- Understanding `ssh` options is essential for system access in different scenarios.
+
+
+
+
+## Level 14  
+
+**Concepts Learned:**  
+- Basics of networking and ports.  
+- How to connect to a specific port on a host.  
+- Using `nc` (netcat) for sending data over a network connection.  
+
+**Tools / Commands Used:**  
+- `nc localhost 30000` – connected to the specified port.  
+- Copied and pasted the current level password into the netcat session to submit it.  
+
+**My Experience / Challenges:**  
+- Initially didn’t realize that the empty line from `nc` was waiting for input.  
+- After recalling the question, I submitted the password and successfully received the next level’s password.  
+- Learned the practical use of `nc` for network communication.  
+
+**Takeaway:**  
+- Ports are endpoints for communication; you can send/receive data using tools like `nc`.  
+- Always read the question carefully — the tool may be waiting for input.  
+- Understanding basic networking concepts is essential for penetration testing tasks.
+
+
+
+## Level 15  
+
+**Concepts Learned:**  
+- Using SSL/TLS encryption for secure communication.  
+- Connecting to encrypted ports using `openssl s_client`.  
+- Difference between plain TCP connections (`nc`) and encrypted connections.  
+
+**Tools / Commands Used:**  
+- `openssl s_client -connect localhost:30001` – connected to the encrypted port.  
+- Copied and pasted the current level password into the session to retrieve the next password.  
+
+**My Experience / Challenges:**  
+- Initially tried using `nc` like before, but it didn’t work due to SSL/TLS encryption.  
+- Researched and learned that `openssl s_client` can handle encrypted connections.  
+- Successfully connected using `openssl s_client` and submitted the password to get the next level.  
+
+**Takeaway:**  
+- SSL/TLS requires special handling for connections; plain TCP tools won’t work.  
+- `openssl s_client` is a valuable tool for testing encrypted ports.  
+- Understanding the difference between encrypted and unencrypted connections is essential for secure communications.
+
+
+
+
