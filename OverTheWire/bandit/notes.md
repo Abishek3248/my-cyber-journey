@@ -287,72 +287,214 @@
 ## Level 13  
 
 **Concepts Learned:**  
-- SSH private keys can be used as an alternative to passwords.  
-- The `-i` flag in `ssh` specifies an identity (private key) file for authentication.  
-- Access control: even if a file exists, you can only read it with the correct permissions or user account.  
+- Using SSH keys (`-i`) to authenticate as another user  
+- Understanding the purpose of SSH keys as an alternative to passwords  
 
 **Tools / Commands Used:**  
-- `ls` – found `sshkey.private` in the home directory.  
-- `ssh -i sshkey.private bandit14@localhost` – logged in as `bandit14` using the private key.  
-- `cat /etc/bandit_pass/bandit14` – retrieved the password once logged in.  
+- `ssh -i bandit13_key bandit14@localhost` – login to the next Bandit level using SSH key  
+- `cat /etc/bandit_pass/bandit14` – read the password for the next level  
 
 **My Experience / Challenges:**  
-- Initially couldn’t read `/etc/bandit_pass/bandit14` because it’s restricted to `bandit14`.  
-- Didn’t know what the private key was at first, so I researched and learned about SSH key-based authentication.  
-- Tried using `ssh` with the `-i` flag and successfully logged in as `bandit14`.  
-- After logging in, reading the password file became straightforward.  
+- The password was stored in `/etc/bandit_pass/bandit14`, but I didn’t have direct access as bandit13.  
+- I found an SSH key in the home directory and researched its purpose online.  
+- Learned that SSH keys are a safer alternative to passwords.  
+- Using the `-i` flag with `ssh`, I logged in as bandit14 and accessed the password file successfully.  
 
 **Takeaway:**  
-- When direct access is restricted, look for alternative authentication methods (like SSH keys).  
-- Always check the home directory for useful files.  
-- Understanding `ssh` options is essential for system access in different scenarios.
-
-
+- SSH keys allow secure login without using passwords.  
+- Always check for alternative authentication methods provided in a challenge.  
 
 
 ## Level 14  
 
 **Concepts Learned:**  
-- Basics of networking and ports.  
-- How to connect to a specific port on a host.  
-- Using `nc` (netcat) for sending data over a network connection.  
+- Networking basics: understanding ports and connections  
+- Using `nc` (netcat) to send data to a specific port  
 
 **Tools / Commands Used:**  
-- `nc localhost 30000` – connected to the specified port.  
-- Copied and pasted the current level password into the netcat session to submit it.  
+- `nc localhost 30000` – connect to port 30000 and send current password  
 
 **My Experience / Challenges:**  
-- Initially didn’t realize that the empty line from `nc` was waiting for input.  
-- After recalling the question, I submitted the password and successfully received the next level’s password.  
-- Learned the practical use of `nc` for network communication.  
+- I needed to submit the current password to port 30000.  
+- Initially, connecting with `nc` gave an empty line; I didn’t realize I needed to submit the password.  
+- After recalling the question, I sent the password using `nc`, which returned the next level’s password.  
 
 **Takeaway:**  
-- Ports are endpoints for communication; you can send/receive data using tools like `nc`.  
-- Always read the question carefully — the tool may be waiting for input.  
-- Understanding basic networking concepts is essential for penetration testing tasks.
-
+- Netcat is a simple tool for sending and receiving data over TCP/UDP ports.  
+- Understand the requirements of a networking challenge before sending data.  
 
 
 ## Level 15  
 
 **Concepts Learned:**  
-- Using SSL/TLS encryption for secure communication.  
-- Connecting to encrypted ports using `openssl s_client`.  
-- Difference between plain TCP connections (`nc`) and encrypted connections.  
+- Connecting to ports with SSL/TLS encryption  
+- Using `openssl s_client` to establish a secure connection  
 
 **Tools / Commands Used:**  
-- `openssl s_client -connect localhost:30001` – connected to the encrypted port.  
-- Copied and pasted the current level password into the session to retrieve the next password.  
+- `openssl s_client -connect localhost:30001` – connect securely to the port and submit password  
 
 **My Experience / Challenges:**  
-- Initially tried using `nc` like before, but it didn’t work due to SSL/TLS encryption.  
-- Researched and learned that `openssl s_client` can handle encrypted connections.  
-- Successfully connected using `openssl s_client` and submitted the password to get the next level.  
+- The challenge required sending the password to a port using SSL/TLS.  
+- I initially tried `nc`, but it didn’t work for encrypted connections.  
+- Researching online, I learned `openssl s_client` can handle SSL/TLS connections.  
+- Using `openssl s_client`, I connected securely and submitted the password successfully.  
 
 **Takeaway:**  
-- SSL/TLS requires special handling for connections; plain TCP tools won’t work.  
-- `openssl s_client` is a valuable tool for testing encrypted ports.  
-- Understanding the difference between encrypted and unencrypted connections is essential for secure communications.
+- SSL/TLS connections require proper tools like `openssl` rather than plain `nc`.  
+- Understanding encryption protocols is important for secure communication challenges.  
+
+
+## Level 16  
+
+**Concepts Learned:**  
+- Scanning a range of ports for open services using `nmap`  
+- Identifying services that support SSL/TLS  
+- Connecting to SSL/TLS-enabled ports using `ncat --ssl`  
+- Using SSH keys to log into a remote account  
+- Using temporary directories (`/tmp`) when home directory is restricted  
+- Editing files with `nano` and `vim`  
+- Managing SSH key permissions with `chmod`  
+
+**Tools / Commands Used:**  
+- `nmap -p 31000-32000 localhost` – scan a range of ports to find open ones  
+- `openssl s_client -connect localhost:<port>` – test SSL/TLS support for each open port  
+- `ncat --ssl localhost <port>` – send password securely to SSL/TLS-enabled port  
+- `nano /tmp/mykey` – create/edit a file (initial attempt, encountered history file issue)  
+- `vim /tmp/mykey` – create/edit a file successfully  
+- `chmod 700 /tmp/mykey` – set correct permissions for the private SSH key  
+- `ssh -i /tmp/mykey bandit17@localhost` – log in using the retrieved SSH key  
+- `cat /etc/bandit_pass/bandit17` – retrieve the password for the next level  
+
+**My Experience / Challenges:**  
+- I had to find which port in the range 31000–32000 supported SSL/TLS to send the password.  
+- `nmap` identified 5 open ports; `openssl s_client` revealed only 2 supported SSL.  
+- Sending the password to both ports initially failed ("key update" messages).  
+- The SSH key was given as text, not a file. I tried creating it in my home directory using `nano` but faced issues with the history file.  
+- I switched to `vim` in `/tmp` to create the key file successfully.  
+- SSH complained the key was unprotected; I fixed this with `chmod 700` on the key.  
+- Using `ssh -i` with the key allowed me to log into bandit17.  
+- After logging in, the password was located in `/etc/bandit_pass/bandit17`.  
+
+**Takeaway:**  
+- Use `/tmp` to create files if home directory permissions are restricted.  
+- Always check SSH key permissions; unprotected keys may prevent login.  
+- `nano` and `vim` are useful for creating and editing files, but issues like history files may require switching editors.  
+- Combining `nmap`, `openssl`, `ncat`, and SSH is critical for challenges involving SSL/TLS and remote authentication.
+
+
+
+## Level 17  
+
+**Concepts Learned:**  
+- Comparing files to identify differences using `diff`  
+- Understanding how minimal changes (like a single password line) can be tracked  
+- Recognizing that login issues may be intentional hints for the next level  
+
+**Tools / Commands Used:**  
+- `diff passwords.old passwords.new` – compare the two files and show differing lines  
+
+**My Experience / Challenges:**  
+- The two files (`passwords.old` and `passwords.new`) were mostly identical except for the password line.  
+- Using `diff` revealed the line that changed, which contained the password for the next level.  
+- When trying to use this password to log in, the response was just "byebye," which initially caused confusion.  
+- The Bandit question explicitly mentioned that this login behavior was related to the **next level**, so I noted the password and moved on.  
+
+**Takeaway:**  
+- `diff` is a powerful tool to compare files and identify even small changes.  
+- Pay attention to challenge instructions; sometimes login issues are intentional hints for the next level.
+
+
+
+## Level 18  
+
+**Concepts Learned:**  
+- Understanding `.bashrc` and how it affects login behavior  
+- Using SSH command options to execute commands remotely before full login  
+- Retrieving passwords even when interactive login is blocked  
+
+**Tools / Commands Used:**  
+- `ssh bandit18@localhost 'cat readme'` – execute `cat readme` remotely without fully logging in  
+
+**My Experience / Challenges:**  
+- The `.bashrc` file in the home directory was modified, preventing normal login.  
+- Unlike previous levels, I couldn’t even get to the shell prompt to manually check files.  
+- I researched online and learned that SSH allows executing a command on the remote server directly when connecting.  
+- By appending the command to `ssh`, I was able to read the `readme` file and retrieve the password without logging in interactively.  
+
+**Takeaway:**  
+- `.bashrc` can block interactive login, but SSH command execution can bypass it.  
+- Understanding remote execution techniques is useful when normal login is restricted.
+
+
+### Level 19
+
+**Concepts Learned:**  
+- Introduction to **setuid binaries** and privilege escalation  
+- Setuid binaries run with the **owner’s privileges** instead of the user’s  
+- Learned to use `id` to check UID/GID for different users  
+- Understood that the binary itself decides what functionality is exposed — not every command can be used  
+- In this case, the binary allowed passing a command as an argument, so I could run commands as the next user  
+- Learned how such binaries can help derive **which files I can access** or **whether I can execute commands** with elevated privileges  
+
+**Tools / Commands Used:**  
+- `ls -l` → check file permissions and notice the `s` bit (setuid)  
+- `id` → view user and group IDs  
+- `./bandit20` → test running the binary without arguments to see usage format  
+- `./bandit20 cat /etc/bandit_pass/bandit20` → run `cat` with elevated privileges to read the password  
+
+**My Experience / Challenges:**  
+- At first, I explored the binary by running it directly; it showed the usage format.  
+- I tried arguments like `bandit18`, `bandit19`, and even numeric IDs from `id`, but none worked.  
+- Re-reading the challenge text, I realized it expected me to use the binary to access the password file.  
+- Inspired by the previous SSH trick, I tested `./bandit20 cat /etc/bandit_pass/bandit20` — and it worked.  
+
+**Takeaway:**  
+- Setuid binaries can provide controlled access to higher privileges.  
+- They don’t always allow arbitrary command execution; it depends on how the binary is coded.  
+- In this challenge, the binary was intentionally designed to execute commands passed to it.  
+- Learned to always check usage hints and combine privilege escalation concepts with file access knowledge.
+
+
+
+## Level 20  
+
+**Concepts Learned:**  
+- Role of a setuid binary that connects to a port and validates input.  
+- Difference between a client (`suconnect`) and a server (listening port).  
+- Using `ncat -l` to create a listening port on localhost.  
+- Importance of sending the **password to the correct side** of the connection.  
+- Using `tmux` to manage multiple windows/sessions simultaneously.  
+
+**Tools / Commands Used:**  
+- `./suconnect 30005` – connect to the listening port.  
+- `ncat -l localhost 30005` – open a listening port on localhost.  
+- `tmux` – manage multiple windows for client and server.  
+- Paste current password into the `ncat` session – validates and outputs next password.  
+
+**My Experience / Challenges:**  
+- First, I tried running `./suconnect 30005`, but it showed **“could not connect”** since no port was listening.  
+- After researching online, I realized I needed to open a listening port before connecting.  
+- That’s when I set up a `tmux` session so I could run the server (`ncat`) in one window and the client (`suconnect`) in another.  
+- Initially, I wasted some time experimenting with `nc -b`, thinking “broadcast” might help.  
+- Eventually, I discovered that `ncat -l` is the correct way to listen for incoming connections.  
+- After running `ncat -l localhost 30005` in one `tmux` window and `./suconnect 30005` in another, the connection was established.  
+- At first, I pasted the password in the wrong window and nothing happened, but when I entered it into the `ncat` session, it worked and revealed the password for the next level.  
+
+**Takeaway:**  
+- A client program cannot connect if there’s no server waiting — both sides must be set up.  
+- `ncat`/`nc` can act as both client and server depending on the flags.  
+- Bandit’s “Commands you may need” section mentioned only `nc`, not `ncat`, which was confusing and delayed my solution.  
+- Using `tmux` is essential when you need multiple interactive sessions at once.  
+
+
+
+
+
+
+
+
+
+
 
 
 
