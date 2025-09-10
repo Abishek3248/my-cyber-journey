@@ -145,7 +145,7 @@
 
 
 
-## Level 8  
+## Level 7 
 
 **Concepts Learned:**  
 - Searching for specific text patterns in files using `grep`  
@@ -485,6 +485,107 @@
 - `ncat`/`nc` can act as both client and server depending on the flags.  
 - Bandit’s “Commands you may need” section mentioned only `nc`, not `ncat`, which was confusing and delayed my solution.  
 - Using `tmux` is essential when you need multiple interactive sessions at once.  
+
+
+## Level 21  
+
+**Concepts Learned**  
+- Cron jobs run scheduled tasks automatically at defined intervals.  
+- System-wide cron jobs are stored in `/etc/cron.d/`.  
+- Cron jobs may execute scripts as specific users.  
+- Redirection (`>`) is used in scripts to write command outputs into files.  
+
+**Tools / Commands Observed / Used**  
+- `cat cronjob_bandit22` – inspect the cron job for the next user  
+- `cat` – read the file where the cron job stored the password  
+
+**My Experience / Challenges**  
+I noticed a cron job file named `cronjob_bandit22` that runs as the `bandit22` user. At first, I didn’t fully understand it, so I researched about cron and scheduled scripts. After opening the script, I saw it used commands like `chmod` (to change permissions) and `cat /etc/bandit_pass/bandit22 > /tmp/...` to write the password to a file.  
+
+By locating and reading that file, I was able to obtain the password for the next level.  
+
+**Takeaway**  
+Cron jobs can expose useful information by writing data to files. Always check how scheduled tasks are configured and where they store their outputs.  
+
+
+
+## Level 22  
+
+**Concepts Learned:**  
+- Inspecting cron jobs in `/etc/cron.d` to understand automated tasks  
+- Reading and analyzing shell scripts  
+- Understanding variables in scripts  
+- Learning about MD5 hashing and how it transforms input into a fixed hash value  
+
+**Tools / Commands Used:**  
+- `cat` – to read cron job and script contents  
+- `md5sum` – to generate the MD5 hash  
+
+**My Experience / Challenges:**  
+- I started by checking `/etc/cron.d/cronjob_bandit23`, which pointed to a script running as `bandit23`.  
+- At first, the script was confusing, so I researched how shell scripts and variables work.  
+- The script contained a line like:
+  
+echo I am user $myname | md5sum
+
+- This command takes the string "I am user <username>", replaces $myname with the actual username, and then generates an MD5 hash of it.
+- After learning what it does, I tried running this line in my terminal. It generated a hash, which I initially thought was the password, but it didn’t work. Looking further into the script, I saw:
+
+cat /etc/bandit_pass/bandit23 > /tmp/$mytarget
+
+- Here, the $mytarget variable was derived from the earlier echo … | md5sum line. This meant the password was being written to a file under /tmp/ with a name equal to that hash.
+
+- At first, I mistakenly used the hash from echo I am user bandit22, but realized the correct username should be bandit23. After correcting this, I ran:
+
+echo I am user bandit23 | md5sum
+
+- This produced the correct hash. I then accessed the file:
+
+cat /tmp/<hash>
+
+- Inside it was the password for the next level.
+
+**Takeaway**  
+Understanding shell scripts is key to solving automation-related challenges.
+MD5 hashing transforms input text into a fixed hash, which can sometimes be used directly as a password or verification string.
+How environment variables work in Bash scripts.
+Importance of paying attention to the correct username in scripted commands.
+
+
+
+## Level 23: Writing My First Script for a Cron Job  
+
+**Concepts Learned:**  
+- Cron jobs and how they execute files at regular intervals.  
+- How a script can check file names and ownership before execution.  
+- The importance of file permissions (`chmod +x`) for making scripts executable.  
+- Writing and running a simple Bash script with a shebang (`#!/bin/bash`).  
+
+**Tools and Commands Used:**  
+- `cat` – to read the cron job script in `/etc/cron.d/cronjob_bandit24`.  
+- `vim` – to create a script (`iam.sh`).  
+- `chmod +x` – to make the script executable.  
+- `cat /etc/bandit_pass/bandit24 > /tmp/hari/password.txt` – the key command inside my script.  
+- `mkdir /tmp/hari` – to create a directory for storing the output.  
+- `stat %u` – used in the cron job script to check file ownership.  
+
+**My Experience / Challenges:**  
+- When I first looked at `/etc/cron.d/cronjob_bandit24`, I saw the script checked the `/var/spool/bandit24/foo` directory. It ignored files with `.` or `..`, then used `stat %u` to check the owner. If the owner was `bandit23`, it executed the file and then deleted it.  
+
+- I understood the logic but wasn’t sure what to do next. Since the instructions mentioned creating my first script, I researched online and realized the key: **anything I placed in that directory would be executed as long as it was owned by bandit23.**  
+
+- I created a script named `iam.sh` with:  
+
+#!/bin/bash
+cat /etc/bandit_pass/bandit24 > /tmp/hari/password.txt
+
+- At first, it didn’t work — no file appeared in /tmp/hari. After some frustration, I realized I had forgotten to make the script executable. Once I ran chmod +x iam.sh, everything worked. Within 30–60 seconds, the cron job executed my script, and when I checked /tmp/hari/password.txt, I found the password for the next level.
+
+**Takeaway**
+- Cron jobs can be exploited by placing controlled scripts in monitored directories.
+- File ownership is critical — only bandit23-owned files were executed.
+- Always remember to give scripts execution permissions with chmod +x.
+- Creating and running even a simple Bash script gave me confidence to build on scripting skills further.
 
 
 
