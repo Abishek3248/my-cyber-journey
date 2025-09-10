@@ -3,7 +3,7 @@ I’m exploring cybersecurity with a focus on penetration testing, starting with
 
 **Completed**
    - Bandit Wargame (OverTheWire)
-*TryHackMe Rooms / Modules:*
+ *TryHackMe Rooms / Modules:*
    - Linux Fundamentals
    - Regular Expressions
    - Bash Scripting
