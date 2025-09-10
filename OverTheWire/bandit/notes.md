@@ -588,15 +588,345 @@ cat /etc/bandit_pass/bandit24 > /tmp/hari/password.txt
 - Creating and running even a simple Bash script gave me confidence to build on scripting skills further.
 
 
+## Level 24  
+
+**Concepts Learned:**  
+- Understanding how daemons listen on ports and can accept input  
+- Using brute force techniques when a 4-digit code is required  
+- Writing simple Bash scripts for automation  
+- Using loops (`for` + `seq`) to generate number ranges with leading zeros  
+- Piping script output into `nc` (netcat) to interact with a listening service  
+
+**Tools / Commands Used:**  
+- `seq -w 0 9999` – generate numbers from 0000 to 9999 with leading zeros  
+- `for` loop in Bash – to iterate through the generated numbers  
+- `echo` – to send data (password + 4-digit code)  
+- `nc` – to connect to the daemon on port 30002  
+- Bash scripting (`#!/bin/bash`, `chmod +x script.sh`, `./script.sh`)  
+
+**My Experience / Challenges:**  
+- The challenge required connecting to a daemon on port `30002` that would accept the current level password plus a 4-digit code.  
+- I realized brute forcing was necessary since the code could be anything from `0000` to `9999`.  
+- I learned a bit of Bash scripting to handle this. I wrote a loop using:  
+
+  ```bash
+  for i in $(seq -w 0 9999); do
+      echo "$pass $i"
+  done
+- Before the loop, I stored the password in a variable:
+
+ pass="jdfhjhfdkjdshkdkhkjdhkj"
+
+
+- At first, I tried running nc localhost 30002 inside the script, but later learned it’s better to pipe the script output into netcat:
+
+ ./script.sh | nc localhost 30002
+
+
+-This worked, and I got the password for the next level.
+-Final Script:
+
+#!/bin/bash
+pass="jdfhjhfdkjdshkdkhkjdhkj"
+
+for i in $(seq -w 0 9999); do
+    echo "$pass $i"
+done
+
+-Run it with:
+
+chmod +x script.sh
+./script.sh | nc localhost 30002
+
+**Takeaway**
+- When brute forcing, automation with Bash loops and seq makes the process efficient.
+- Piping script output into tools like nc is a powerful way to test inputs against network services.
+
+
+
+## Level 25  
+
+**Concepts Learned:**  
+- Identifying user shells from `/etc/passwd`  
+- Understanding restricted shells and their limitations  
+- Using `more` and `vi` to escape restricted environments  
+- Leveraging editor commands (`:set shell=` and `:shell`) to spawn a proper shell  
+
+**Tools / Commands Used:**  
+- `cat /etc/passwd | grep bandit26` – check the login shell of `bandit26`  
+- `ssh -i bandit26.sshkey bandit26@localhost` – attempt login with SSH key  
+- `more` and `vi` – text viewers/editors used as escape points from restricted shells  
+- `:set shell=/bin/bash` and `:shell` – commands in `vi` to switch to a proper Bash shell  
+
+**My Experience / Challenges:**  
+- The task involved figuring out how to access `bandit26`, whose shell was not the usual `/bin/bash`.  
+- By checking `/etc/passwd`, I found that `bandit26`’s shell was set to a program called `showtext` instead of a standard shell.  
+- I tried using the SSH key available in the home directory to log in as `bandit26`, but the connection closed immediately, confirming the restricted shell was blocking access.  
+- After researching, I learned that resizing the terminal triggered `more` when displaying output, which in turn allowed switching to `vi`.  
+- Inside `vi`, I discovered that I could escape the restricted environment by setting the shell manually:  
+  ```vim
+  :set shell=/bin/bash
+  :shell
+- This provided me a working Bash shell as bandit26. From there, I accessed the password file:
+
+cat /etc/bandit_pass/bandit26
+
+- This was my first time using an editor as an escape mechanism, and it helped me understand how non-standard shells can be bypassed in practice.
+
+**Takeaway**
+- Restricted shells are often vulnerable to escape methods via built-in programs like more or vi.
+- Exploring editor commands is a powerful way to break out of limited environments and gain a proper shell.
+
+
+## Level 26  
+
+**Concepts Learned:**  
+- Revisiting the concept of setuid binaries  
+- Using setuid files to execute commands with elevated privileges  
+- Applying previously learned techniques to new challenges  
+
+**Tools / Commands Used:**  
+- `ls` – to identify files in the home directory  
+- `./bandit27-do <command>` – run commands with `bandit27`’s privileges  
+- `cat /etc/bandit_pass/bandit27` – read the password file  
+
+**My Experience / Challenges:**  
+- This level had a setuid file named `bandit27-do` in the home directory.  
+- From earlier levels (around Level 19), I already learned how setuid binaries can be used to run commands as another user.  
+- I directly applied that knowledge here by executing:  
+  ```bash
+  ./bandit27-do cat /etc/bandit_pass/bandit27
+- This returned the password for the next level.
+
+**Takeaway**
+Concepts from earlier challenges often reappear in later ones. Recognizing patterns and reusing past solutions saves time.
+
+
+
+## Level 27  
+
+**Concepts Learned:**  
+- Accessing Git repositories over SSH  
+- Understanding how to specify custom ports in Git URLs  
+- Working with temporary directories when permissions are restricted  
+- Using Git to clone repositories and inspect contents  
+
+**Tools / Commands Used:**  
+- `git clone <repo-url>` – clone the Git repository  
+- `ssh://user@host:port/path/to/repo` – Git URL format with custom port  
+- `mkdir /tmp/<dir>` and `cd` – create and move into a writable directory  
+- `cat` – read the contents of files  
+
+**My Experience / Challenges:**  
+- This level involved cloning a Git repository hosted on the Bandit server.  
+- The repo link provided was:  
+  ssh://bandit27-git@localhost/home/bandit27-git/repo
+
+- I knew the server was using port `2220`, so I first tried:  
+
+  git clone ssh://bandit27-git@localhost/home/bandit27-git/repo -p 2220
+
+- but that didn’t work, since Git doesn’t accept ports that way.
+
+- I also experimented with ssh -p 2220, but that wasn’t correct either.
+
+- Since I didn’t have permissions to clone directly into the home directory, I created a writable directory under /tmp and worked there.
+
+- The key realization came when I remembered how URLs are written in host:port style (like in web addresses). I applied that here:
+
+  git clone ssh://bandit27-git@localhost:2220/home/bandit27-git/repo
+
+- This worked, asked for the password, and successfully cloned the repo into /tmp/github.clone.
+
+- Inside the repository, I found a README file. Reading it with cat revealed the password for the next level.
+
+**Takeaway**
+- Git over SSH requires the port to be specified in the URL (host:port).
+- When working in restricted environments, use /tmp as a safe writable directory.
+
+
+## Level 28  
+
+**Concepts Learned:**  
+- Reusing Git over SSH with custom ports  
+- Exploring Git commit history to find past changes  
+- Using `git log` to view commit metadata  
+- Using `git show <commit-id>` to inspect changes made in specific commits
+
+**Tools / Commands Used:**  
+- `git clone ssh://bandit28-git@localhost:2220/home/bandit28-git/repo` – clone the repository  
+- `cd repo` – move into the cloned repository  
+- `cat README.md` – check the file contents  
+- `git log` – list commit history  
+- `git show <commit-id>` – view details and changes from specific commits  
+
+**My Experience / Challenges:**  
+- After cloning the repository into `/tmp/git-clone`, I noticed that it contained a directory named `repo`. Inside this, there was a `README.md` file.  
+- Reading the file showed notes for *Bandit Level 29*, but the password field was just `xxxxxxxx`, suggesting it had been altered.  
+- Since the instructions hinted at using Git, I explored its functionality and learned about commits and history.  
+- Running `git log` revealed previous commit hashes.  
+- Using:  
+  ```bash
+  git show <commit-id>
+- I examined an earlier version of the README.md file and found the actual password for the next level.
+
+**Takeaway**
+- Git repositories can hide sensitive information in their history, even if the current version looks harmless.
+- Always check commit logs and previous versions when analyzing repositories in security challenges.
+
+
+
+## Level 29  
+
+**Concepts Learned:**  
+- My introduction to Git branches and how information can be hidden in them
+- Investigating Git branches to uncover hidden information
+- Using remote branches (`remotes/origin/<branch>`) to access alternate content  
+- Using `git branch -a` to list all local and remote branches  
+- Using `git show <branch>` to view the contents of files in specific branches  
+
+**Tools / Commands Used:**  
+- `git clone ssh://bandit29-git@localhost:2220/home/bandit29-git/repo` – clone the repository  
+- `cd <repo>` – move into the cloned directory  
+- `cat README.md` – check the current file contents  
+- `git log` – view commit history  
+- `git branch -a` – list all local and remote branches  
+- `git show <branch>` – view file contents from specific branches  
+
+**My Experience / Challenges:**  
+- As usual, I created a directory in `/tmp` and cloned the repository. Inside, I found the `README.md` file.  
+- The README indicated no password in production instead of `xxxxxxxx`, unlike the previous level.  
+- I tried checking all commit logs using `git log` and `git show`, but none revealed the password.  
+- After researching, I learned that Git stores information in branches too.  
+- I used `git branch` but didn’t find anything useful at first, then discovered the `-a` flag, which listed all local and remote branches.  
+- Inspecting the remote branch `remotes/origin/dev` with `git show remotes/origin/dev` finally revealed the password for the next level.  
+
+**Takeaway:**  
+- Passwords or sensitive information may not always be in the main branch; exploring remote or alternative branches can reveal hidden data.  
+- Understanding the structure of Git repositories (commits, branches, remotes) is crucial in security challenges.  
+
+
+
+## Level 30  
+
+**Concepts Learned:**  
+- Continuing exploration of Git repository internals  
+- Understanding that Git tags can also store historical or hidden information  
+- Using `git tag` to list all tags  
+- Using `git show <tag>` to inspect the content associated with a tag  
+
+**Tools / Commands Used:**  
+- `git clone ssh://bandit30-git@localhost:2220/home/bandit30-git/repo` – clone the repository  
+- `cd <repo>` – move into the cloned directory  
+- `cat README.md` – check the file contents  
+- `git branch -a` – list all local and remote branches  
+- `git show <branch>` – view contents from specific branches  
+- `git tag` – list all tags  
+- `git show <tag>` – view contents associated with a specific tag  
+
+**My Experience / Challenges:**  
+- As usual, I created a directory in `/tmp` and cloned the repository. Inside, I found the `README.md` file.  
+- Unlike the previous levels, the README was essentially empty, showing just a placeholder message instead of any information.  
+- I checked all commits and branches using `git log`, `git show`, and `git branch -a`, but still found nothing useful.  
+- Based on experience from the past few levels, I suspected there might be other hidden locations where Git stores data.  
+- After researching, I discovered that Git tags can also store information.  
+- Running `git tag` revealed a tag named `secret`. Using:  
+  ```bash
+  git show secret
+- I was able to retrieve the password for the next level.
+
+**Takeaway:**
+- Information in Git repositories can be hidden not only in branches and commits but also in tags.
+- Exploring all Git mechanisms (branches, commits, and tags) is essential when hunting for hidden data in security challenges.
+
+
+## Level 31  
+
+**Concepts Learned:**  
+- Pushing changes to a remote Git repository  
+- Preparing files for commit using `git add`  
+- Saving changes locally with `git commit`  
+- Understanding the relationship between local branches and remote branches (`origin/master`)  
+- Using `git push` to send changes to a remote repository  
+
+**Tools / Commands Used:**  
+- `git clone ssh://bandit31-git@localhost:2220/home/bandit31-git/repo` – clone the repository  
+- `cd <repo>` – move into the cloned directory  
+- `cat README.md` – read instructions  
+- `echo "May I come in?" > key.txt` – create the required file  
+- `git branch` – check the current branch  
+- `git add key.txt` – stage the file for commit  
+- `git commit -m "upload a file"` – commit changes locally  
+- `git push -u origin master` – push changes to the remote repository  
+
+**My Experience / Challenges:**  
+- As usual, I created a directory in `/tmp` and cloned the repository.  
+- The `README.md` file contained a message specifying the task: push a file to the remote repository. It clearly displayed the details — the filename, the content to include, and the branch (`master`).  
+- I created the file `key.txt` with the content `May I come in?` and confirmed that the branch was already `master`.  
+- I first tried to push directly, but the process failed because the file had not been staged or committed yet.  
+- After researching the proper Git workflow, I used:  
+  ```bash
+  git add key.txt
+  git commit -m "upload a file"
+  git push -u origin master
+- The push resulted in an error, but during the connection process, the password for the next level was revealed.
+
+**Takeaway:**
+- Pushing changes to a remote repository requires staging and committing files first.
+- Even if the push fails, interactions with the remote host can sometimes reveal useful information, like credentials or passwords.
+
+
+
+## Level 32  
+
+**Concepts Learned:**  
+- Working with non-standard shells and their limitations  
+- Using special shell variables like `$0` to interact with the environment  
+- Escaping restricted shells to access a standard Bash or sh shell  
+
+**Tools / Commands Used:**  
+- `$0` – to spawn a subshell from a restricted or unusual shell  
+- `cat /etc/bandit_pass/bandit33` – read the password file once a proper shell was obtained  
+
+**My Experience / Challenges:**  
+- In this level, the shell provided was a custom program that converts everything typed into uppercase. This made running normal commands impossible.  
+- I tried various approaches, including using `$SHELL`, but none worked.  
+- After researching online, I discovered that the `$0` variable could be used as an alternative to invoke a shell.  
+- I expected it might just display the shell name, but instead it spawned a standard `sh` subshell.  
+- From this subshell, I was able to run normal commands, including:  
+  ```bash
+  cat /etc/bandit_pass/bandit33
+ which gave me the password for the next level.
+
+**Takeaway:**
+- Non-standard shells can often be bypassed using built-in shell variables like $0.
+- Exploring environment variables and thinking creatively about shell behavior is essential when dealing with restricted environments.
 
 
 
 
 
 
+**Summary & Reflections**
 
+- Completing the Bandit wargame was an intensive, hands-on journey that provided deep exposure to Linux systems, shell environments, and foundational cybersecurity practices. Across 32 progressively challenging levels, I encountered tasks ranging from basic file navigation to advanced concepts such as setuid binaries, restricted shells, automated cron jobs, Git repository exploration, and networking techniques, including port scanning with nmap and secure connections using nc, ncat, and openssl.
 
+- Through this exercise, I developed and strengthened several key skills:
 
+- Linux Command-Line Proficiency: Navigating directories, managing files, using piping, find, xargs, and other essential commands.
 
+- Shell Scripting & Automation: Writing scripts to automate repetitive tasks, including brute-force attempts and scheduled file operations.
+
+- Understanding System Privileges: Identifying and leveraging setuid binaries, understanding file ownership, and handling permission-restricted environments.
+
+- Git & Version Control Insight: Interacting with Git repositories over SSH, exploring commits, branches, and tags to uncover hidden information.
+
+- Networking & Secure Communication: Using netcat, ncat, and openssl to connect to ports, interact with daemons, and handle SSL/TLS connections.
+
+- Problem-Solving & Research Skills: Approaching unfamiliar challenges methodically, consulting documentation, and applying creative solutions when standard approaches failed.
+
+- Restricted & Non-Standard Shells: Recognizing limitations of custom shells and learning escape techniques using environment variables and editor-based methods.
+
+- This experience reinforced the importance of careful observation, patience, and logical reasoning in cybersecurity. Each level introduced new concepts while building on prior knowledge, allowing me to apply previously learned techniques to increasingly complex scenarios. Overall, completing Bandit has significantly strengthened my confidence in navigating Linux environments, understanding security principles, and applying systematic problem-solving in practical situations.
 
 
