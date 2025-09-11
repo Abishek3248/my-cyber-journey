@@ -1,18 +1,18 @@
 # Linux Fundamentals - Part 2 Cheatsheet
 
 ## SSH & Remote Access
-| Command / Concept | Description                          | Example / Notes               |
+| Command / Concept | Description                          | Examples              |
 |------------------|--------------------------------------|-------------------------------|
 | `ssh`            | Connect to remote machine securely    | `ssh username@IP_ADDRESS`     |
 
 ## Flags & Manual Pages
-| Command / Concept | Description                          | Example / Notes               |
+| Command / Concept | Description                          | Examples              |
 |------------------|--------------------------------------|-------------------------------|
 | `ls`             | List directory contents, can use flags | `ls -a` (show hidden files)  |
 | `man`            | Access manual pages for commands     | `man ls`                      |
 
 ## Filesystem Interaction
-| Command / Concept | Description                          | Example / Notes               |
+| Command / Concept | Description                          | Examples            |
 |------------------|--------------------------------------|-------------------------------|
 | `touch`          | Create a new file                     | `touch note`                  |
 | `mkdir`          | Create a new directory                | `mkdir mydirectory`           |
@@ -22,13 +22,13 @@
 | `file`           | Determine type of a file              | `file note`                   |
 
 ## User Management & Permissions
-| Command / Concept | Description                          | Example / Notes               |
+| Command / Concept | Description                          | Examples            |
 |------------------|--------------------------------------|-------------------------------|
 | `su`             | Switch user                           | `su -l user2`                 |
 | File Permissions  | Check read, write, execute access    | `ls -lh` (view permissions)  |
 
 ## Common Root Directories
-| Directory | Description                             | Notes                           |
+| Directory | Description                             | Examples                        |
 |-----------|-----------------------------------------|---------------------------------|
 | `/etc`    | System configuration files              | `sudoers`, `passwd`, `shadow`  |
 | `/var`    | Variable data; logs, databases         | `backups`, `log`, `tmp`        |
