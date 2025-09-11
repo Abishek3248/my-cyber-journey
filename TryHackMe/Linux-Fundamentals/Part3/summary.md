@@ -1,6 +1,6 @@
 # Linux Fundamentals – Part 3 Summary 
 
-“Part 3 focused on practical system administration and security tasks, building on foundational skills to handle real-world Linux management efficiently.”
+**Part 3 focused on practical system administration and security tasks, building on foundational skills to handle real-world Linux management efficiently.**
 
 - Created and edited files with Nano; explored Vim as an advanced editor.  
 - Transferred and served files using `wget`, `scp`, and Python’s built-in `http.server`.  
