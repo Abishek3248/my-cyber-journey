@@ -27,8 +27,11 @@ Bash is a scripting language available on most Linux distributions and MacOS. Sh
 - Script contents:
   #!/bin/bash
   echo "Hello World"
+  
   ls
+  
   whoami
+  
   id
 - *Make the script executable:*
   chmod +x first_script.sh
