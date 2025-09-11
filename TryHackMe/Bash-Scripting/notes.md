@@ -24,7 +24,7 @@ Bash is a scripting language available on most Linux distributions and MacOS. Sh
 - You can include both Bash commands and regular Linux commands in a script.
 ### Implementation:
 - *Create a script file, e.g., first_script.sh.*
-- *Script contents:*
+- Script contents:
   #!/bin/bash
   echo "Hello World"
   ls
