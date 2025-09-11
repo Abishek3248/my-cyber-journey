@@ -23,20 +23,17 @@ Bash is a scripting language available on most Linux distributions and MacOS. Sh
 - Scripts start with a shebang (#!/bin/bash) to indicate the interpreter.
 - You can include both Bash commands and regular Linux commands in a script.
 ### Implementation:
-- *Create a script file, e.g., first_script.sh.*
-- Script contents:
-  #!/bin/bash
-  echo "Hello World"
-  
-  ls
-  
-  whoami
-  
-  id
-- *Make the script executable:*
-  chmod +x first_script.sh
-- *Run the script:*
-  ./first_script.sh
+- **Create a script file, e.g., first_script.sh.**
+- **Script contents:**
+     #!/bin/bash
+     echo "Hello World"
+     ls
+     whoami
+     id
+- **Make the script executable:**
+     chmod +x first_script.sh
+- **Run the script:**
+     ./first_script.sh
 
 ### Notes:
 - echo outputs text to the terminal, similar to Python’s print.
@@ -56,26 +53,26 @@ Bash is a scripting language available on most Linux distributions and MacOS. Sh
 - Multiple variables can be used in the same statement.
 - 
 ### Implementation / Example:
-- **Assign a value to a variable:**
-   name="Harish"
-- **Use the variable:**
-   echo $name
-- **Output:**
+ **Assign a value to a variable:**
+    name="Harish"
+ **Use the variable:**
+    echo $name
+ **Output:**
     Harish
-- **Combine variables:**
-   first="Harish"
+ **Combine variables:**
+    first="Harish"
     second="R"
     echo $first $second
-- **Output:**
-   Harish R
-- **Debugging:**
-- **Run script with debug mode to trace execution:**
+ **Output:**
+    Harish R
+ **Debugging:**
+ **Run script with debug mode to trace execution:**
     bash -x ./script.sh
-- **Insert set -x and set +x in the script to debug specific sections:**
-   set -x
-   echo $name
-   set +x
-- **Debugging shows which commands are executed successfully and highlights errors for easy correction.**
+ **Insert set -x and set +x in the script to debug specific sections:**
+    set -x
+    echo $name
+    set +x
+ **Debugging shows which commands are executed successfully and highlights errors for easy correction.**
 
 ### Notes:
 - Variables simplify updating values across a script without changing multiple lines.
@@ -95,24 +92,24 @@ Bash is a scripting language available on most Linux distributions and MacOS. Sh
 ### Implementation / Example:
 
 **Using command-line arguments:**
-echo "Hello $1"
+  echo "Hello $1"
 **Run with:**
-./example.sh Alex
+  ./example.sh Alex
 **Output:**
-Hello Abishek
-Accessing the second argument:
-echo "Hello $2"
+  Hello Abishek
+**Accessing the second argument:**
+  echo "Hello $2"
 **Run with:**
-./example.sh Abishek J
+  ./example.sh Abishek J
 **Output:**
   J
 **Interactive input with read:**
-echo "Enter your name:"
-read name
-echo "Hello $name"
+  echo "Enter your name:"
+  read name
+  echo "Hello $name"
 **Combine multiple parameters for dynamic output:**
-read name age job
-echo "My name is $name, I am $age years old, and I work as a $job."
+  read name age job
+  echo "My name is $name, I am $age years old, and I work as a $job."
 **Output:**
   My name is Abishek, I am 21 years old, and I work as a penetration Tester
 ### Notes:
@@ -127,36 +124,31 @@ echo "My name is $name, I am $age years old, and I work as a $job."
 **This section covers creating, accessing, modifying, and deleting arrays in Bash scripts.**
 
 ### Concepts Learned:
-
 Arrays store multiple pieces of data in a single variable.
-
 Each element in an array has an index, starting at 0.
-
 Array elements can be accessed, modified, or removed individually.
 
 ### Implementation / Example:
-
 **Declare an array:**
-
-fruits=('apple' 'banana' 'cherry' 'date')
+   fruits=('apple' 'banana' 'cherry' 'date')
 **Print all elements:**
-echo "${fruits[@]}"
+   echo "${fruits[@]}"
 **Output:**
-apple banana cherry date
+   apple banana cherry date
 **Access a single element by index:**
-echo "${fruits[2]}"
+   echo "${fruits[2]}"
 **Output:**
-cherry
+   cherry
 **Modify an element:**
-fruits[1]='blueberry'
-echo "${fruits[@]}"
+   fruits[1]='blueberry'
+   echo "${fruits[@]}"
 **Output:**
-apple blueberry cherry date
+   apple blueberry cherry date
 **Remove an element using unset:**
-unset fruits[0]
-echo "${fruits[@]}"
+   unset fruits[0]
+   echo "${fruits[@]}"
 **Output:**
-blueberry cherry date
+   blueberry cherry date
 
 
 ### Notes:
@@ -180,15 +172,15 @@ blueberry cherry date
 
 ## Implementation / Example:
 **Basic if syntax:**
-count=10
-if [ $count -eq 10 ]; then
-    echo "They are equal"
-else
-    echo "They are not equal"
-fi
+   count=10
+   if [ $count -eq 10 ]; then
+       echo "They are equal"
+   else
+       echo "They are not equal"
+   fi
 
 **Output (if count=10):**
-They are equal
+   They are equal
 
 **Common Relational Operators:**
 *Operator	Description*
@@ -204,19 +196,19 @@ They are equal
 - Use logical combinations in conditional statements.
 
 **Check if a file exists and is writable:**
-  file=$1
-  if [ -f "$file" ] && [ -w "$file" ]; then
-    echo "hello" >> "$file"
-  else
-      touch "$file"
-      echo "hello" >> "$file"
-  fi
+     file=$1
+     if [ -f "$file" ] && [ -w "$file" ]; then
+     echo "hello" >> "$file"
+     else
+         touch "$file"
+         echo "hello" >> "$file"
+     fi
 
 **Run script:**
-  ./example.sh myfile.txt
-  cat myfile.txt
+     ./example.sh myfile.txt
+     cat myfile.txt
 **Output:**
-  hello
+     hello
 
 
 ## Notes:
