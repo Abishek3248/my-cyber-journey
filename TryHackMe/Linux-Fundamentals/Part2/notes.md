@@ -1,4 +1,5 @@
 ## Introduction
+
 Part 2 builds on Part 1 by introducing working with **remote terminals**, using **flags and arguments** with commands, **advanced filesystem operations**, **file access management**, and running **scripts and executables**.
 
 
@@ -110,8 +111,9 @@ Part 2 builds on Part 1 by introducing working with **remote terminals**, using 
 
 
 ## Key Takeaway
-- Connecting to remote Linux machines using SSH.
-- Using flags and switches to extend command functionality and reading man pages.
-- Performing advanced filesystem interactions: creating, moving, copying, and removing files/folders.
-- Understanding file permissions and switching between users.
-- Familiarity with important root directories (/etc, /var, /root, /tmp) and their uses.
+- Learned to connect to remote Linux machines securely using SSH — a skill frequently applied in Bandit.
+- Explored command arguments through flags and switches to extend default behaviors; learned to reference man pages for detailed usage.
+- Advanced filesystem interactions: creating (touch), moving/renaming (mv), copying (cp), removing (rm), and making directories (mkdir).
+- Understood file permissions, user and group access, and switching between users using su.
+- Familiarized with key root directories (/etc, /var, /root, /tmp) and their purpose for system configuration, data storage, and temporary file handling.
+- Frequent practical use reinforces command efficiency, SSH familiarity, and overall confidence in Linux terminal navigation.
