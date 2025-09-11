@@ -4,7 +4,8 @@ This repository contains my hands-on exercises and notes from TryHackMe (THM), c
 
 
 ## Completed Modules
-- **Linux Fundamentals** – Core Linux concepts, filesystem navigation, process and service management, and automation.  
-- **Bash Scripting** – Writing scripts to automate tasks and enhance system management.  
-- **Regular Expressions** – Pattern matching, text parsing, and data manipulation for practical problem-solving.
+- **Linux Fundamentals**
+- **Regular Expressions** 
+- **Bash Scripting**  
+
 
