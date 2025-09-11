@@ -1,3 +1,4 @@
+# OverTheWire: Bandit Walkthrough
 ## Level 0  
 
 **Concepts Learned:**  
@@ -495,7 +496,7 @@
 - Cron jobs may execute scripts as specific users.  
 - Redirection (`>`) is used in scripts to write command outputs into files.  
 
-**Tools / Commands Observed / Used**  
+**Tools / Commands Used:**  
 - `cat cronjob_bandit22` – inspect the cron job for the next user  
 - `cat` – read the file where the cron job stored the password  
 
@@ -561,7 +562,7 @@ Importance of paying attention to the correct username in scripted commands.
 - The importance of file permissions (`chmod +x`) for making scripts executable.  
 - Writing and running a simple Bash script with a shebang (`#!/bin/bash`).  
 
-**Tools and Commands Used:**  
+**Tools / Commands Used:**  
 - `cat` – to read the cron job script in `/etc/cron.d/cronjob_bandit24`.  
 - `vim` – to create a script (`iam.sh`).  
 - `chmod +x` – to make the script executable.  
@@ -901,32 +902,5 @@ Concepts from earlier challenges often reappear in later ones. Recognizing patte
 **Takeaway:**
 - Non-standard shells can often be bypassed using built-in shell variables like $0.
 - Exploring environment variables and thinking creatively about shell behavior is essential when dealing with restricted environments.
-
-
-
-
-
-
-**Summary & Reflections**
-
-- Completing the Bandit wargame was an intensive, hands-on journey that provided deep exposure to Linux systems, shell environments, and foundational cybersecurity practices. Across 32 progressively challenging levels, I encountered tasks ranging from basic file navigation to advanced concepts such as setuid binaries, restricted shells, automated cron jobs, Git repository exploration, and networking techniques, including port scanning with nmap and secure connections using nc, ncat, and openssl.
-
-- Through this exercise, I developed and strengthened several key skills:
-
-- Linux Command-Line Proficiency: Navigating directories, managing files, using piping, find, xargs, and other essential commands.
-
-- Shell Scripting & Automation: Writing scripts to automate repetitive tasks, including brute-force attempts and scheduled file operations.
-
-- Understanding System Privileges: Identifying and leveraging setuid binaries, understanding file ownership, and handling permission-restricted environments.
-
-- Git & Version Control Insight: Interacting with Git repositories over SSH, exploring commits, branches, and tags to uncover hidden information.
-
-- Networking & Secure Communication: Using netcat, ncat, and openssl to connect to ports, interact with daemons, and handle SSL/TLS connections.
-
-- Problem-Solving & Research Skills: Approaching unfamiliar challenges methodically, consulting documentation, and applying creative solutions when standard approaches failed.
-
-- Restricted & Non-Standard Shells: Recognizing limitations of custom shells and learning escape techniques using environment variables and editor-based methods.
-
-- This experience reinforced the importance of careful observation, patience, and logical reasoning in cybersecurity. Each level introduced new concepts while building on prior knowledge, allowing me to apply previously learned techniques to increasingly complex scenarios. Overall, completing Bandit has significantly strengthened my confidence in navigating Linux environments, understanding security principles, and applying systematic problem-solving in practical situations.
 
 
