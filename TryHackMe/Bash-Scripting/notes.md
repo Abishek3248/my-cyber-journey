@@ -51,7 +51,7 @@ Bash is a scripting language available on most Linux distributions and MacOS. Sh
 - Variable names cannot contain spaces and must not have spaces around = when assigning values.
 - Access variable values using $ before the variable name.
 - Multiple variables can be used in the same statement.
-- 
+  
 ### Implementation / Example:
  **Assign a value to a variable:**
     name="Harish"
@@ -124,9 +124,9 @@ Bash is a scripting language available on most Linux distributions and MacOS. Sh
 **This section covers creating, accessing, modifying, and deleting arrays in Bash scripts.**
 
 ### Concepts Learned:
-Arrays store multiple pieces of data in a single variable.
-Each element in an array has an index, starting at 0.
-Array elements can be accessed, modified, or removed individually.
+- Arrays store multiple pieces of data in a single variable.
+- Each element in an array has an index, starting at 0.
+- Array elements can be accessed, modified, or removed individually.
 
 ### Implementation / Example:
 **Declare an array:**
