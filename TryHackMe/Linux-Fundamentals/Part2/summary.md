@@ -1,7 +1,9 @@
-# Linux Fundamentals - Part 2 Summary
-**A beginner-friendly walkthrough highlighting the essential Linux skills gained from Linux Fundamentals Part 1 on TryHackMe.**
-- Connecting to remote Linux machines using SSH.
-- Using flags and switches to extend command functionality and reading man pages.
-- Performing advanced filesystem interactions: creating, moving, copying, and removing files/folders.
-- Understanding file permissions and switching between users.
-- Familiarity with important root directories (/etc, /var, /root, /tmp) and their uses.
+# Linux Fundamentals – Part 2 Summary  
+
+**Building on the practical experience from **OverTheWire Bandit**, this module on **TryHackMe** served as structured reinforcement of core Linux skills, with a focus on system management and everyday command-line tasks.**  
+
+- Connected to remote Linux machines using SSH.  
+- Extended command functionality with flags/switches and `man` pages.  
+- Practiced advanced filesystem interactions: create, move, copy, remove files/folders.  
+- Reviewed file permissions and switching between users.  
+- Explored key root directories (`/etc`, `/var`, `/root`, `/tmp`) and their typical uses.  
