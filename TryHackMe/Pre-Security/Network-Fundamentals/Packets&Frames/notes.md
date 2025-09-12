@@ -136,9 +136,19 @@
 - Common Ports: 0–1024 are “well-known” or standard ports; others are ephemeral or custom.
 - Protocols & Ports
 
+
 ## Practical Lab
 - Task: Connect to IP 8.8.8.8 on port 1234 using the terminal interface.
 - Method: Typed the command in a GUI-like search bar; the input was executed in the terminal automatically.
 - Outcome: Successfully connected and received a flag.
 
+
+## Key Takeaways
+- Data is transmitted in packets and encapsulated in frames, ensuring efficient delivery and proper routing.
+- TCP is connection-oriented and reliable, establishing connections via a three-way handshake (SYN → SYN/ACK → ACK) and ensuring ordered, error-checked data data transfer
+- UDP is stateless and connectionless, faster than TCP, and suitable for real-time applications like streaming and gaming.
+- TCP headers include source/destination IPs and ports, sequence and acknowledgement numbers, checksum, flags, and data.
+- UDP headers include TTL, source/destination IPs and ports, and data.
+- Ports are numerical endpoints (0–65535) that direct data to the correct application, with standard ports (0–1024) for common protocols like HTTP, HTTPS, FTP, SSH, SMB, and RDP.
+- Hands-on labs like simulating TCP handshake and connecting to an IP/port help reinforce concepts and make learning interactive.
 
