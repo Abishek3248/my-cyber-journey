@@ -1,1 +1,9 @@
+# Summary – Defensive Security Intro
 
+- I learned the basics of SOC operations, threat intelligence, incident response, and malware analysis, along with some practical experience handling alerts in a simulated environment.
+- Observed how a SOC team monitors networks and detects potential security events.
+- Understood the role of threat intelligence in identifying malicious actors and predicting their actions.
+- Learned about incident response phases: preparation, detection, containment, eradication, and post-incident analysis.
+- Practically monitored alerts in a simulated SIEM system to identify suspicious IPs and events.
+- Verified IP reputation using IP-Scanner.THM, AbuseIPDB, and Cisco Talos Intelligence.
+- Followed basic mitigation steps by reporting suspicious activity and coordinating with a SOC lead to block threats.
