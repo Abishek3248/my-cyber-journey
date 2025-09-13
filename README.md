@@ -8,6 +8,7 @@ I’m exploring cybersecurity with a focus on penetration testing, starting with
    - Regular Expressions
    - Bash Scripting
    - Network Fundamentals
+
 **In Progress / Next Steps**
   - PreSecurity Path (TryHackMe)
   - Cybersecurity 101 (TryHackMe)
