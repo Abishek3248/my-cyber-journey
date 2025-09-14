@@ -22,18 +22,18 @@
 - The <body> contains visible content:
 - <h1> for main headings.
 - <p> for paragraphs.
-- <img src="path"> to display images.
+- "<img src="path">" to display images.
 - File paths and extensions in <img> tags must be correct for the image to display.
 - Comments allow you to leave notes in the code that are not rendered in the browser.
 
 ### Notes
 **Original Code (with missing extension):**
-<img src='img/cat-2.'>
+"<img src='img/cat-2.'>"
 - Issue: Missing .jpg extension → image did not display.
 **Corrected Code (added proper extension and dog image):**
-<img src='img/cat-1.jpg'>
-<img src='img/cat-2.jpg'>
-<img src='img/dog-1.png'>
+"<img src='img/cat-1.jpg'>"
+"<img src='img/cat-2.jpg'>"
+"<img src='img/dog-1.png'>"
 - Fix: Added correct .jpg for second cat image.
 - Added a dog image to demonstrate adding new content.
 - Running the code in the interactive lab showed the images on the webpage as expected.
