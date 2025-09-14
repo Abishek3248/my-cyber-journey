@@ -17,12 +17,12 @@
 - You can add new content, like images, by properly specifying the src attribute in the <img> tag.
 
 ### Explanation
-- The <html> element wraps the entire webpage.
-- The <head> section contains metadata like the page <title>.
-- The <body> contains visible content:
-- <h1> for main headings.
-- <p> for paragraphs.
-- "<img src="path">" to display images.
+- The 'html' element wraps the entire webpage.
+- The 'head' section contains metadata like the page <title>.
+- The body contains visible content:
+- 'h1' for main headings.
+- ''p' for paragraphs.
+- "img src="path"" to display images.
 - File paths and extensions in <img> tags must be correct for the image to display.
 - Comments allow you to leave notes in the code that are not rendered in the browser.
 
@@ -109,10 +109,8 @@ Loads an external JS file.
 ### Explanation
 - When websites take user input (e.g., from a form) and display it back on the page without filtering, an attacker can inject code.
 For example, if the input box asks for your name, and instead of typing text you insert an HTML snippet, the page will render it as actual HTML.
-
 **In the lab, I tested this by injecting:**
-  <a href="http://hacker.com">Link Text</a>
-
+  "a href="http://hacker.com">Link Text</a>"
 - This created a clickable malicious link on the vulnerable page.
 - This shows how user-controlled input can alter the page structure/behavior, making it dangerous if not sanitized.
 
@@ -129,3 +127,10 @@ For example, if the input box asks for your name, and instead of typing text you
 
 
 
+## Key Takeaway
+- Website Structure: Websites are built with a front end (HTML, CSS, JS) and a back end (server logic) that handle requests and responses.
+- HTML: Provides the structure of a webpage. Small errors (like missing file extensions) can break elements.
+- JavaScript: Makes web pages interactive by dynamically updating content, handling events, and modifying HTML elements.
+- Sensitive Data Exposure: Viewing page source or frame source can reveal hidden credentials or links if developers forget to sanitize/remove them.
+- HTML Injection: Occurs when unsanitized user input is rendered on a webpage. Attackers can inject HTML/JS, altering page functionality.
+- Security Lesson: The golden rule — never trust user input. Always sanitize and validate before rendering or storing.
