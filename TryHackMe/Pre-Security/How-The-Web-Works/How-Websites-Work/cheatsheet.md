@@ -34,10 +34,3 @@
 | Impact | Control appearance, mislead users |
 | Prevention | Sanitize/escape all user input |
 
-
-## Key Takeaways  
-- **Frontend** → HTML + JavaScript define structure & interactivity.  
-- **Backend** → Server processes requests, sends responses.  
-- **Common Pitfalls** → Missing file extensions, exposed credentials, unsafe input.  
-- **Security Essentials** → Always sanitize input & review source code for leaks.  
-
