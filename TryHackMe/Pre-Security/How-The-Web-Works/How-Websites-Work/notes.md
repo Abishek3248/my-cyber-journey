@@ -28,12 +28,12 @@
 
 ### Notes
 **Original Code (with missing extension):**
-"<img src='img/cat-2.'>"
+"img src='img/cat-2.'"
 - Issue: Missing .jpg extension → image did not display.
 **Corrected Code (added proper extension and dog image):**
-"<img src='img/cat-1.jpg'>"
-"<img src='img/cat-2.jpg'>"
-"<img src='img/dog-1.png'>"
+"img src='img/cat-1.jpg'"
+"img src='img/cat-2.jpg'"
+"img src='img/dog-1.png'"
 - Fix: Added correct .jpg for second cat image.
 - Added a dog image to demonstrate adding new content.
 - Running the code in the interactive lab showed the images on the webpage as expected.
@@ -70,6 +70,62 @@ Loads an external JS file.
 - JS script changed it to "Hack The Planet".
 - Button click changes text to "Button Clicked".
 - Learned how to manipulate element content and add interactivity via buttons and events.
+
+
+## Sensitive Data Exposure
+
+### Concepts Learned
+- Sensitive Data Exposure occurs when sensitive info (like credentials or hidden links) is left in the website’s front-end.
+- Such data can appear in HTML comments, JavaScript code, or hidden inputs.
+- Attackers can leverage this to access restricted areas or escalate attacks.
+
+### Explanation
+ **While testing a sample login page:**
+- First checked page source, but couldn’t find the password.
+- Discovered that the login form was inside a frame, so the real data was in the frame source.
+ **By viewing frame source, found hardcoded credentials:**
+    Username: admin
+    Password: testpasswd
+- This showed how easily overlooked data can lead to vulnerabilities.
+
+### Notes
+- Always review page source and frame source for sensitive data.
+**Look for:**
+- Hardcoded usernames/passwords.
+- Developer comments with hints.
+- API keys, tokens, or hidden endpoints.
+- Exposed credentials can be directly used to log in or chained with other attacks.
+
+
+## HTML Injection
+
+### Concepts Learned
+- HTML Injection happens when unfiltered user input is directly displayed on a webpage.
+- If input isn’t sanitized, attackers can inject HTML or JavaScript into the page.
+- This affects the client-side (browser rendering), but can still cause serious risks.
+- Input sanitization (removing or escaping HTML tags) is the key prevention method.
+- General security rule: never trust user input.
+
+### Explanation
+- When websites take user input (e.g., from a form) and display it back on the page without filtering, an attacker can inject code.
+For example, if the input box asks for your name, and instead of typing text you insert an HTML snippet, the page will render it as actual HTML.
+
+**In the lab, I tested this by injecting:**
+  <a href="http://hacker.com">Link Text</a>
+
+- This created a clickable malicious link on the vulnerable page.
+- This shows how user-controlled input can alter the page structure/behavior, making it dangerous if not sanitized.
+
+### Notes
+- Cause: Unfiltered/unsanitized input displayed directly in HTML.
+- Impact: Attacker can:
+- Change page appearance.
+- Inject malicious links.
+- Potentially escalate to JavaScript injection (leading to XSS).
+**Prevention:**
+- Sanitize/escape user input.
+- Strip out HTML tags before rendering.
+- Practical Example: Injected an <a> tag to display a custom link.
 
 
 
