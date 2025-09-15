@@ -1,18 +1,41 @@
 # Linux Fundamentals Notes
 
-This folder contains my notes and practical exercises from the Linux Fundamentals series on TryHackMe, designed to build a strong foundation in Linux system administration and cybersecurity.
+## What I Learned and Gained
+- Through this module, I gained practical experience working with Linux systems, reinforcing my understanding of system administration, command-line operations, and essential tools used in cybersecurity. Across three parts, I built confidence in navigation, file management, process control, and system services—forming a strong foundation for advanced tasks in penetration testing and defensive security.
 
-## Folder Structure
+## Key Concepts Covered
 
-- **part1/** – Basic Linux navigation, commands, and shell operators. Focused on building familiarity with the command line.
-- **part2/** – Intermediate concepts including SSH, filesystem interaction, user permissions, and common root directories.
-- **part3/** – Advanced concepts such as file editing, downloads, process and service management, task automation, package management, and log monitoring.
+ - Part 1:
+   - Core Linux commands: echo, whoami, ls, cd, cat, pwd.
+   - File searching with find and grep.
+   - Shell operators: &, &&, >, >>.
 
-## Purpose
+ - Part 2:
+   - Remote access with SSH.
+   - Command arguments with flags and man pages.
+   - Filesystem interactions: create, move, copy, delete files and directories.
+   - File permissions and user management.
+   - Key Linux directories: /etc, /var, /root, /tmp.
 
-These notes consolidate hands-on Linux practice to reinforce command-line proficiency, system administration skills, and preparation for cybersecurity challenges. Practical exercises include TryHackMe labs and OverTheWire’s Bandit wargame.
+ - Part 3:
+   - File editing with Nano and Vim.
+   - File transfer and hosting: wget, scp, python3 -m http.server.
+   - Process monitoring and control: ps, top, signals (SIGTERM, SIGKILL, SIGSTOP), job control (&, fg).
+   - Service management with systemctl.
+   - Task automation using cron and crontab.
+   - Software management with APT (repositories, GPG keys, install/remove).
+   - System monitoring and auditing with logs in /var/log.
 
-## How to Use
+## Practical Skills
+- Confidently navigating and managing the Linux filesystem.
+- Searching and filtering files with powerful commands.
+- Connecting to and managing remote systems via SSH.
+- Editing and managing files with command-line editors.
+- Transferring and serving files across systems.
+- Monitoring, controlling, and managing system processes.
+- Configuring services and automating tasks with cron jobs.
+- Installing, updating, and removing packages securely with APT.
+- Using system logs for troubleshooting and auditing.
 
-Each part contains a cheatsheet and examples to quickly reference commands and workflows. Start with Part 1 and progress sequentially to build confidence and mastery of Linux fundamentals.
-
+## Overall Takeaway
+- The Linux Fundamentals module provided hands-on, structured experience to build confidence and efficiency in using Linux for both administrative and cybersecurity purposes. By covering core commands, system management, file transfers, processes, and automation, it gave me the foundational skills required for real-world Linux environments and prepared me for advanced penetration testing and security challenges.
