@@ -1,11 +1,9 @@
 # Bash Scripting – TryHackMe
 
-This folder contains my hands-on exercises and notes from the Bash Scripting room on TryHackMe. It focuses on scripting fundamentals, automation, and practical command-line usage to enhance system administration skills.
+**This folder contains my hands-on exercises and notes from the Bash Scripting room on TryHackMe. It focuses on scripting fundamentals, automation, and practical command-line usage to enhance system administration skills.**
 
 ## Introduction
-
-Bash is a scripting language available on most Linux distributions and MacOS. Shell scripts are sequences of Bash commands in a file, used to automate tasks and perform more complex operations than single-line commands.  
-
+- Bash is a scripting language available on most Linux distributions and MacOS. Shell scripts are sequences of Bash commands in a file, used to automate tasks and perform more complex operations than single-line commands.  
 **Key concepts explored in this room include:**
 - Bash syntax  
 - Variables  
