@@ -4,14 +4,15 @@ I’m exploring cybersecurity with a focus on penetration testing, starting with
 **Completed**
    - Bandit Wargame (OverTheWire)
  *TryHackMe Rooms / Modules:*
+   - PreSecurity Path(Completed)
    - Linux Fundamentals
    - Regular Expressions
    - Bash Scripting
    - Network Fundamentals
    - How The Web Works
+   - Windows Fundamentals
 
 **In Progress / Next Steps**
-  - PreSecurity Path (TryHackMe)
   - Cybersecurity 101 (TryHackMe)
   - Penetration Testing Path (TryHackMe), including:
   - Junior Pentester Path
