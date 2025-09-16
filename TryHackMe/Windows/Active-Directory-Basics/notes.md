@@ -1,1 +1,111 @@
+# Active Directory Basics
 
+## Introduction
+Microsoft's Active Directory (AD) is the backbone of the corporate world. It simplifies the management of devices and users within a corporate environment. In this room, we’ll take a deep dive into the essential components of Active Directory.
+**Topics To Be Covered**
+- What Active Directory is  
+- What an Active Directory Domain is  
+- What components go into an Active Directory Domain  
+- Forests and Domain Trust  
+- And much more!  
+
+
+## Windows Domain
+
+### Concepts Learned
+- A Windows domain centralizes management of users, computers, and policies in a network.
+- Active Directory (AD) is the repository that manages identities and policies.
+- The Domain Controller (DC) is the server running Active Directory services.
+- Domains make it possible to scale management from a few systems to hundreds across multiple offices.
+
+### Explanation
+- Managing a handful of computers manually is possible, but as organizations grow, it becomes inefficient to configure and troubleshoot each system individually. A Windows domain solves this by centralizing identity and policy management. Instead of having separate user accounts on every machine, accounts and policies are stored in Active Directory and enforced by the Domain Controller.
+- This allows IT administrators to configure users, groups, and security policies once, and apply them across the network. It also enables features like:
+- Centralized authentication (log into any domain-joined computer with the same credentials).
+- Network-wide policies (e.g., restricting control panel access, enforcing password complexity).
+- In real-world environments like schools, universities, or workplaces, when you log in with a username and password, the machine forwards authentication to Active Directory. This means your credentials don’t need to be stored locally, and access is managed centrally.
+
+### Notes
+- Windows Domain: Group of users and computers managed centrally with AD.
+- Active Directory (AD): Central repository for managing identities and policies.
+- Domain Controller (DC): Server that runs AD services.
+**Advantages:**
+- Centralized identity management.
+- Security policies applied across the network.
+
+
+## Active Directory
+
+### Concepts Learned
+- Active Directory Domain Services (AD DS) as the central catalogue for all network objects.
+- Objects in AD: Users, Machines, Security Groups, Printers, Shares, etc.
+- Security principals (users, machines, groups) that can authenticate and act on resources.
+- Machine accounts and their naming scheme.
+- Default and custom security groups in a domain.
+- Organizational Units (OUs) for grouping and applying policies.
+- Difference between Security Groups and OUs.
+- Tools: Active Directory Users and Computers (ADUC) for managing objects.
+
+### Explanation
+- Active Directory is the heart of a Windows domain. AD DS provides a structured way to store, manage, and authenticate objects such as users, machines, and groups.
+- Users: Represent either people (employees) or services (like IIS, MSSQL). Service accounts have limited rights, enough to run their respective services.
+- Machines: Each computer joining the domain gets a machine object, which is also a security principal. Their accounts (e.g., DC01$) rotate long random passwords automatically.
+- Security Groups: Collections of users/machines that simplify permission management. Groups can include other groups, making access control scalable.
+- OUs: Container objects that organize users/machines, often by department. Policies are applied at the OU level, enforcing configurations on users within them.
+- While OUs classify users/machines for policy enforcement, Groups manage permissions over resources like files and printers. A user can belong to many groups but only one OU.
+- The ADUC tool provides a GUI to create, manage, and organize users, groups, and OUs. For example, at THM Inc., the AD structure mimics business departments (IT, Management, Marketing, R&D, Sales).
+
+### Notes
+- Security Principals: Any object that can authenticate and act on resources (users, machines, groups).
+- Machine Accounts: Named <computername>$, auto-rotating passwords (~120 chars).
+**Important Security Groups:**
+- Domain Admins → Admin rights over the entire domain.
+- Server Operators → Manage DCs without changing admin groups.
+- Backup Operators → Access files bypassing permissions.
+- Account Operators → Create/modify accounts.
+- Domain Users → All user accounts.
+- Domain Computers → All computers in domain.
+- Domain Controllers → All DCs.
+**Default Containers:**
+- Builtin → Default groups.
+- Computers → Default location for new machines.
+- Domain Controllers → Holds DCs.
+- Users → Default users/groups.
+- Managed Service Accounts → Service-specific accounts.
+**OU vs Groups:**
+- OU = Policy application (one per user).
+- Groups = Permissions to resources (many per user).
+- Scalability for larger environments.
+- Example: University logins → one username/password works on all lab computers.
+
+
+## Managing Users in Active Directory
+
+### Concepts Learned
+- Understanding Organizational Units (OUs) and their role in AD.
+- Protecting and deleting OUs (accidental deletion protection).
+- Creating and deleting users to match organizational needs.
+- Delegation in AD: granting specific permissions to non-admin users.
+- Using RDP to connect with domain user accounts.
+- Resetting passwords with delegated privileges via PowerShell.
+
+### Explanation
+- In AD, administrators can organize users into OUs for better management. OUs are protected against accidental deletion, but admins can disable this feature if removal is needed. Users can be created or removed to reflect organizational changes.
+- Delegation allows administrators to give specific users limited control, such as resetting passwords within an OU, without giving them full domain admin rights. This reduces overhead and improves efficiency.
+- In practice, RDP can be used to log in as delegated users. Even though delegated users don’t have access to AD management tools, they can still perform tasks like password resets using PowerShell. This provides secure and restricted administrative capabilities.
+
+### Notes
+**OU Deletion Protection**
+- Default setting prevents accidental deletion.
+- Can be disabled via Properties → Object tab.
+**Delegation**
+- Grants granular control (e.g., reset passwords).
+- Example: Phillip (IT Support) delegated password reset control for Sales OU.
+**PowerShell Commands**
+*Resetting a password:*
+- Set-ADAccountPassword sophie -Reset -NewPassword (Read-Host -AsSecureString -Prompt 'New Password') -Verbose
+**Forcing password change at next logon:**
+- Set-ADUser -ChangePasswordAtLogon $true -Identity sophie -Verbose
+**RDP Usage**
+- Login format: DOMAIN\username (e.g., THM\phillip).
+- Used to connect as delegated users like Phillip or Sophie.
