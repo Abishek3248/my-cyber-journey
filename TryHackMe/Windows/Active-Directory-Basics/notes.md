@@ -109,3 +109,148 @@ Microsoft's Active Directory (AD) is the backbone of the corporate world. It sim
 **RDP Usage**
 - Login format: DOMAIN\username (e.g., THM\phillip).
 - Used to connect as delegated users like Phillip or Sophie.
+
+
+### Managing Computers in AD
+
+#### Concepts Learned
+- Default behavior: all machines (except DCs) join under the **Computers** container.  
+- Best practice: segregate devices into dedicated OUs for better policy management.  
+- Common categories of devices in AD:  
+  - **Workstations** – used by end-users for daily tasks; no privileged accounts should log in here.  
+  - **Servers** – provide services to users or other servers.  
+  - **Domain Controllers** – manage the AD domain; most sensitive as they store all user password hashes.  
+- Creating separate OUs for **Workstations** and **Servers** improves organization and policy application.  
+
+#### Explanation
+- When machines join the domain, they are automatically placed in the **Computers** container. This is not optimal since servers, workstations, and domain controllers require different security and usage policies.  
+
+- To maintain structure, administrators should create **Organizational Units (OUs)** to separate machines by type or usage. *For example:*
+   - Workstations OU → for employee computers and laptops.  
+   - Servers OU → for infrastructure and service machines.  
+   - Domain Controllers OU → automatically handled by Windows.  
+
+- This logical grouping ensures policies can be applied consistently and securely across each type of device.  
+
+#### Notes
+- Moved devices from the default **Computers** container into their respective **Workstations** or **Servers** OUs.  
+- Practiced creating OUs directly under `thm.local` domain.  
+- This setup simplifies applying **Group Policies** to different machine types later.  
+
+
+## Group Policy Objects (GPOs)
+
+### Concepts Learned
+- What GPOs are and how they work in Active Directory.
+- How to configure and link GPOs to OUs.
+- Difference between User and Computer configurations in GPOs.
+- Default policies in AD (Default Domain Policy, RDP Policy, Default Domain Controllers Policy).
+- Security filtering for targeted GPO application.
+- SYSVOL share for GPO distribution.
+- Practical examples of creating and applying custom GPOs:
+- Restricting access to Control Panel for non-IT users.
+- Auto-locking screens after 5 minutes of inactivity.
+
+### Explanation
+- Group Policy Objects (GPOs) are collections of settings applied to OUs within an Active Directory domain. They allow administrators to enforce consistent configurations and security baselines for users and computers. GPOs can contain User Configurations (settings for identities) and Computer Configurations (settings for machines).
+- Default Domain Policy applies domain-wide, usually containing basic rules like password and lockout policies.
+- Default Domain Controllers Policy applies only to Domain Controllers.
+- GPOs can be linked to any OU, and their effects cascade down to sub-OUs.
+- Administrators can configure settings using the Group Policy Management tool.
+- GPO distribution is handled via the SYSVOL network share.
+- By default, GPO changes take time to propagate, but admins can force sync using gpupdate /force.
+- In practice, administrators create custom GPOs to enforce organizational rules, such as restricting access to system settings or enforcing inactivity timeouts.
+
+### Notes
+- Creating GPOs: First create under Group Policy Objects, then link to the OU.
+- Security Filtering: By default applies to all authenticated users, but can be restricted to certain accounts.
+- Editing GPOs: Access via Group Policy Management → Edit → navigate policies (e.g., password length, account lockout).
+- SYSVOL Share: Located at C:\Windows\SYSVOL\sysvol\ on DCs; ensures GPOs replicate across the domain.
+**Practical Hands-On (THM):**
+- Created Restrict Control Panel Access GPO, linked to Marketing, Sales, and Management OUs.
+- Created Auto Lock Screen GPO with 5-min inactivity timeout, applied at root domain level.
+- Tested via RDP using Mark’s credentials → verified control panel restriction and auto lock.
+**Important Command:**
+ gpupdate /force
+(forces GPO update on demand).
+
+
+## Authentication Methods
+
+### Concepts Learned
+- Windows domains rely on Domain Controllers to store and verify credentials.
+- Two authentication protocols exist: Kerberos (default, modern) and NetNTLM (legacy, compatibility).
+- Kerberos uses tickets (TGT & TGS) for secure authentication.
+- NetNTLM uses a challenge-response mechanism without transmitting passwords.
+
+### Explanation
+**Kerberos:**
+- User sends encrypted credentials (username + timestamp) to the KDC (Key Distribution Center).
+- KDC returns a Ticket Granting Ticket (TGT) + Session Key.
+- When accessing services, the user requests a Ticket Granting Service (TGS) using the TGT.
+- KDC issues a TGS encrypted with the Service Owner Hash, containing a Service Session Key.
+- The service decrypts the TGS, validates the session key, and grants access.
+**NetNTLM:**
+- Authentication works with a challenge-response mechanism.
+- Server sends a random challenge to the client.
+- Client generates a response using their NTLM password hash + challenge.
+- Server forwards this to the Domain Controller.
+- DC recalculates and verifies the response.
+- If valid, authentication succeeds.
+- Password/hash is never directly sent over the network.
+
+### Notes
+- Kerberos is more secure and efficient (default in modern domains).
+- Tickets (TGT & TGS) help reduce credential exposure by avoiding repeated password transmissions.
+- TGT = proof of authentication, issued by KDC, encrypted with krbtgt hash.
+- TGS = service-specific ticket, encrypted with the service account hash.
+- NetNTLM still exists in networks for compatibility but is considered obsolete.
+- Local accounts can authenticate via NetNTLM without contacting a Domain Controller (since SAM holds the password hash).
+
+
+## Trees, Forests and Trusts
+
+### Concepts Learned
+- Single domain can become insufficient as organizations grow.
+- Trees = multiple domains sharing the same namespace (e.g., uk.thm.local, us.thm.local).
+- Forests = multiple trees with different namespaces (e.g., thm.local + mht.local).
+- Enterprise Admins group manages across all domains in a forest.
+- Trust relationships allow cross-domain or cross-forest access.
+- Trusts can be one-way or two-way depending on direction of access.
+
+### Explanation
+- Single Domain: Easy to manage but limited when organizations expand.
+**Trees:**
+- Created when multiple domains share the same namespace.
+- Example: thm.local root → subdomains uk.thm.local & us.thm.local.
+- Each branch has its own Domain Controller (DC), admins, and policies.
+- Local Domain Admins manage only their branch, while Enterprise Admins manage all.
+**Forests:**
+- Used when domains have different namespaces (e.g., THM acquiring MHT).
+- A forest = collection of trees in a shared network.
+- Allows different IT departments to manage independently but still be connected.
+**Trust Relationships:**
+- Enable resource access across domains/forests.
+- One-way trust: Domain A trusts Domain B → users from B can access A’s resources (but not the reverse).
+- Two-way trust: Mutual trust → both domains can authorise users across boundaries.
+- By default, domains in a tree/forest establish two-way trusts.
+- Trust only provides the possibility of cross-domain access; actual authorisation must be configured.
+
+### Notes
+- Trees = multiple domains under one namespace.
+- Forests = multiple trees across different namespaces.
+- Domain Admins control one domain; Enterprise Admins control the entire forest.
+- Trusts can be one-way (direction matters) or two-way (mutual).
+- Trust ≠ automatic access → permissions still need explicit authorisation.
+
+
+## Key Takeaways
+- Active Directory (AD) is the backbone of corporate environments, centralizing the management of users, devices, and resources.
+- Domains are the fundamental building blocks of AD, managed by Domain Controllers (DCs).
+- Organizational Units (OUs) allow logical grouping of users, groups, and devices for easier management and policy application.
+- Computers in AD should be organized into categories (Workstations, Servers, Domain Controllers) to apply proper security policies.
+- Authentication in AD mainly relies on Kerberos (default, ticket-based, secure) and NetNTLM (legacy, challenge-response).
+- Trees group multiple domains under a shared namespace, while forests combine multiple trees across different namespaces.
+- Enterprise Admins manage the entire forest, while Domain Admins are limited to their own domain.
+- Trust relationships (one-way or two-way) enable controlled resource sharing across domains and forests.
+- Proper design of AD structure (domains, OUs, forests, and trusts) is essential for scalability, security, and efficient administration.
