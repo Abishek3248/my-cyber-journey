@@ -1,4 +1,4 @@
-## Windows Command Line Cheatsheet
+## Cheatsheet - Windows Command Line
 
 | Concept                  | Command / Syntax                                  | Notes / Description |
 |---------------------------|--------------------------------------------------|-------------------|
