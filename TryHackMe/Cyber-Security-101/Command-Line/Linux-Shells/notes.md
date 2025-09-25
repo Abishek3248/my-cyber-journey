@@ -107,7 +107,7 @@
 - This exercise reinforces the practical application of variables, loops, and conditional statements in a real Linux environment.
 
 
-**Key Takeaways**
+## Key Takeaways
 - Linux shells provide a powerful interface to interact with the operating system beyond the GUI, enabling faster and more efficient operations.  
 - The default shell on most Linux distributions is Bash, but other shells like Fish and Zsh offer unique features, customization, and user-friendly options.  
 - Basic shell commands (`pwd`, `cd`, `ls`, `cat`, `grep`) are essential for navigating directories, viewing file contents, and searching for patterns within files.  
@@ -119,6 +119,5 @@
 - Comments (`#`) improve script readability and maintainability without affecting execution.  
 - Practical exercises reinforce the ability to modify and execute scripts, apply root privileges when necessary, and manipulate files across the system.  
 - Mastery of shell commands, scripting, and different shell types lays the groundwork for advanced Linux system administration, automation, and cybersecurity tasks.
-
 - `cat` displays full file contents; `more` or `less` can be used for long files.
 - `grep` extracts specific lines matching a pattern; extremely useful for large files.
