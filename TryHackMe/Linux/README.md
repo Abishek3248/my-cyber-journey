@@ -1,13 +1,11 @@
 # Linux Notes
 
-This folder contains my Linux-related notes from TryHackMe and other practice.  
-It includes **Linux Fundamentals**, **Bash Scripting**, and **Regular Expressions**.  
-Each subfolder has detailed notes, summaries, and cheatsheets.
+This folder contains my Linux-related notes from TryHackMe and practice labs.  
+Topics include:
 
-## Modules
-1. **Linux Fundamentals**
-2. **Bash Scripting**
-3. **Regular Expressions**
-  
-- These notes were completed during my TryHackMe learning path, starting with **Linux Fundamentals** as a prerequisite for Bandit, and later expanding into scripting and regex for deeper Linux proficiency.
+- Linux Fundamentals  
+- Bash Scripting  
+- Regular Expressions  
 
+Each subfolder has concise notes, summaries, and cheatsheets for quick reference.  
+These notes were created during my TryHackMe learning path, starting with Linux Fundamentals as a prerequisite for Bandit, and later expanding into scripting and regex for deeper proficiency.
