@@ -1,6 +1,6 @@
 # Summary - PowerShell
 
-Practical experience with PowerShell, building foundational skills for managing Windows systems, automating tasks, and performing system analysis.
+**Practical experience with PowerShell, building foundational skills for managing Windows systems, automating tasks, and performing system analysis.**
 
 - Learned PowerShell cmdlets and the consistent Verb-Noun structure for commands.
 - Explored file system navigation and file operations (`Get-ChildItem`, `Set-Location`, `New-Item`, `Remove-Item`, `Copy-Item`, `Move-Item`, `Get-Content`).
