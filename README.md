@@ -11,6 +11,8 @@ I’m exploring cybersecurity with a focus on penetration testing, starting with
    - Network Fundamentals
    - How The Web Works
    - Windows Fundamentals
+   - Command Line
+   - Networking
 
 **In Progress / Next Steps**
   - Cybersecurity 101 (TryHackMe)
