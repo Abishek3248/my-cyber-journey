@@ -1,4 +1,4 @@
-# Cheatsheet - Wireshark Quicklook
+# Cheatsheet - Wireshark The Basics
 
 | Feature / Concept            | Description / Usage                                                                 |
 |-------------------------------|-----------------------------------------------------------------------------------|
