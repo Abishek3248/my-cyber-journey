@@ -7,10 +7,12 @@
 ## Hash Functions
 
 ### Concepts Learned
-- Hash Functions
-- Hash Collisions
-- Importance of Hashing
-- Common Hash Algorithms: MD5, SHA1, SHA256
+- Hash functions generate a fixed-size output (digest) from any input size.
+- Hashing is one-way and does not use a key, meaning the original input cannot be recovered.
+- A good hash function is fast to compute, unpredictable, and highly sensitive to small input changes (avalanche effect).
+- Hashing is important for data integrity, password storage, file verification, and digital signatures.
+- Hash collisions occur when two different inputs produce the same hash, and secure functions make this extremely unlikely.
+- Older algorithms like MD5 and SHA1 are insecure, while SHA256 and stronger algorithms are recommended.
 
 ### Explanation
 - Hash functions take input of any size and produce a fixed-size output called a digest.
