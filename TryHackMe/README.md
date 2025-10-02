@@ -1,6 +1,5 @@
 # TryHackMe Labs  
-
-This repository contains my hands-on exercises and notes from TryHackMe (THM), covering **Linux fundamentals, Windows fundamentals, Bash scripting, Regular Expressions, Networking fundamentals, HTTP/HTTPS protocols, and Web technologies**.  
+- This repository contains my hands-on exercises and notes from TryHackMe (THM), covering **Linux fundamentals, Windows fundamentals, Bash scripting, Regular Expressions, Networking fundamentals, HTTP/HTTPS protocols,  Web technologies, Introduction To Cybersecurity, Command Line, Networking, Cryptography, and Exploitation Basics**.  
 
 ## Completed Modules/Rooms  
 - Linux Fundamentals  
@@ -8,4 +7,9 @@ This repository contains my hands-on exercises and notes from TryHackMe (THM), c
 - Regular Expressions  
 - Bash Scripting  
 - Network Fundamentals  
-- How The Web Works  
+- How The Web Works
+- Introduction To Cybersecurity
+- Command Line
+- Networking
+- Cryptography
+- Exploitation Basics
