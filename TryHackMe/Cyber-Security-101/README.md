@@ -10,27 +10,16 @@
 - Exploitation Basics: exploit lifecycle (recon → vuln ID → exploit → delivery → session → post), RCE/SMB abuse examples (e.g., MS17-010 and file:// moniker netNTLMv2 leakage), Metasploit module structure and payload models (inline vs staged), Meterpreter architecture and extensions, and post-exploitation goals (enumeration, credential extraction, escalation, lateral movement).
 
 ## Practical Hands-On Skills
-
 - Navigating and managing files and directories in Linux and Windows.
-
 - Writing and executing shell and PowerShell scripts for automation.
-
 - Collecting system and network data (systeminfo, ipconfig, netstat, etc.).
-
 - Filtering and processing command output (pipes, filters, selective properties).
-
 - Executing commands on remote hosts and using CLI for troubleshooting.
-
 - Performing host discovery and port scanning with Nmap (and db_nmap integration).
-
 - Capturing and analyzing network traffic with Wireshark and Tcpdump; following sessions and interpreting network metadata.
-
 - Observing TCP/UDP streams and testing secure communication via TLS, SSH, and VPNs.
-
 - Generating, managing, and using cryptographic keys (SSH/GPG); recognizing, hashing, and cracking passwords using Hashcat and John the Ripper.
-
 - Verifying file integrity, using HMACs, and checking downloaded files against official hashes.
-
 - running focused scans and NSE scripts to identify vulnerable vectors, using Metasploit (msfconsole, msfvenom, exploit/multi/handler) to select and run modules, generating and delivering payloads, interacting with Meterpreter (migration, hashdump, load kiwi), stabilizing sessions, and performing offline cracking of captured hashes — all practiced with strict lab hygiene and documentation.
 
 ## Overall Takeaway
